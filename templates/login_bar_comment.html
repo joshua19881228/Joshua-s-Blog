@@ -1,0 +1,22 @@
+{% if user.is_authenticated %} 
+    {% load disqus_tags %}
+    <li><a href="https://disqus.com/home/forums/joshualiblog/" target="_blank">{{user}}</a></li>
+    <li><a href="{{ object.get_absolute_url }}#disqus_thread" data-disqus-identifier="{{ object.id }}">View Comments</a></li>
+    {% disqus_num_replies %}
+    <li><a href="/accounts/logout/">LOGOUT</a></li>
+{% else %}
+<li>
+    <form class="navbar-form" method="post" action="/accounts/login/">
+        {% csrf_token %}
+        <ul class="form-group">
+            <div class="input-group input-group-sm">
+                <input type="text" name="username" class="form-control" placeholder="user name">
+            </div>
+            <div class="input-group input-group-sm">
+                <input type="password" name="password" class="form-control" placeholder="password">
+            </div>
+            <input type="submit" class="btn btn-default btn-sm" value='LOGIN'>
+        </ul>
+    </form>
+</li>
+{% endif %}

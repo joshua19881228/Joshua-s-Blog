@@ -1,0 +1,71 @@
+<!DOCTYPE html> 
+{% extends "base.html" %}
+{% block title %} 
+    {{conversation.start_date}} 
+{% endblock %} 
+
+{% block other_sidebar %} 
+    {% if user.username == a_conversation.creator %}
+        <li><a href="#add_content"><i class="fa fa-pencil fa-fw fa-lg"></i><span style="padding:4px">ADD CONTENT</span></a></li>
+    {% endif %}
+        <li><a href="#comments"><i class="fa fa-comment fa-fw fa-lg"></i><span style="padding:4px">ADD COMMENT</span></a></li>
+{% endblock %} 
+
+{% block login_bar %} 
+    {% include 'login_bar_comment.html' %} 
+{% endblock %} 
+
+{% block content %} 
+    {% load disqus_tags %}
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="title">
+                    <h3>
+                        {% if a_conversation.conversation_title %} 
+                            {{ a_conversation.conversation_title }} 
+                        {% else %} 
+                            CONVERSATION 
+                        {% endif %}
+                    </h3>
+                </div>
+            </div>
+            <div class="panel-body">
+                <!-- 多说评论框 start -->
+                <div class="ds-thread" data-thread-key={{a_conversation.get_url}} data-title={{ a_conversation.conversation_title }} data-url="http://joshua881228.webfactional.com/{{a_conversation.get_url}}"></div>
+                <!-- 多说评论框 end -->
+                <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                <script type="text/javascript">
+                var duoshuoQuery = {short_name:"joshua881228"};
+                (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';ds.async = true;
+                        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0]
+                        || document.getElementsByTagName('body')[0]).appendChild(ds);
+                })();
+                </script>
+                <!-- 多说公共JS代码 end -->
+
+                <div id="comments">{% disqus_show_comments %}</div>
+                <div class="joshua-content">
+                    {% for comment in comment_list %}
+                        <div id="{{comment.id}}"><b>Author:</b>{{comment.comment_nickname}} <b>Time:</b>{{ comment.comment_pub_date }}</div>
+                        <div>{{ comment.comment_content|safe }}</div>
+                        <div>
+                            {% if user.is_superuser or user.username == comment.comment_nickname %}
+                                <a href="/{{comment.delete_url}}/" onclick="return confirm('CONFIRM?')" class="btn btn-default btn-sm">DELETE</a>                    {% endif %}
+                        </div>
+                        <hr> 
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if user.username == a_conversation.creator %}
+        <div id=add_content>
+            {% include 'comment_form.html' %}
+        </div>
+    {% endif %} 
+{% endblock %}

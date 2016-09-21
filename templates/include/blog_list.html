@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+{% extends "base.html" %} 
+{% block title %}My Django Blog{% endblock %} 
+
+{% block login_bar %}
+    {% include 'login_bar.html'
+%} {% endblock %} 
+
+{% block content %} 
+    {% load djangomarkdown %} 
+    {% for blog in blog_list %}
+        <div class="panel-joshua">
+            <div class="panel-heading">
+                <div class="title">
+                    <h2><a href="/{{ blog.get_url }}/"> {{ blog.blog_title }}</a></h2>
+                </div>
+                <div>
+                    <span style="color:#AAAAAA; padding-right:10px"><b>Pub. Date:</b>{{ blog.blog_pub_date }}</span>
+                    <span style="color:#AAAAAA; padding-right:10px"><b>Topic:</b>{{ blog.blog_topic }}</span>
+                    <span style="color:#AAAAAA; padding-right:10px"><b>Tag:</b>{{ blog.blog_tag }}</span>
+                </div>
+                <div>
+                    {% if user.is_superuser %}
+                    <span style="color:#AAAAAA; padding-right:10px"><a href="/{{blog.update_url}}/">EDIT</a></span>
+                    <span style="color:#AAAAAA; padding-right:10px"><a href="/{{blog.delete_url}}/" onclick="return confirm('CONFIRM?')">DELETE</a></span>   {% endif %}
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="joshua-content">{{ blog.blog_content|djangomarkdown }}</div>
+            </div>
+        </div>
+        <hr /> 
+    {% endfor %}
+    <div class="page-number" style="text-align:right">
+        <a href="/{{archive_type}}/{{prev_page_idx}}" class="btn btn-default">PREV</a> 
+        {% if not start_page_idx == 1 %}
+            <a href="/{{archive_type}}/{{prev_block}}">...</a> 
+        {% endif %} 
+        {% for page_num in page_list %} 
+            {% if page_num == page_idx %}
+                <a style="font-size:1.4em" href="/{{archive_type}}/{{page_num}}/">{{ page_num }}</a> 
+            {% else %}
+                <a href="/{{archive_type}}/{{page_num}}/">{{ page_num }}</a> 
+            {% endif %}
+        {% endfor %} 
+        {% if not end_page_idx == total_page_num %}
+            <a href="/{{archive_type}}/{{next_block}}">...</a> 
+        {% endif %}
+        <a href="/{{archive_type}}/{{next_page_idx}}" class="btn btn-default">NEXT</a>
+    </div>
+{% endblock %}

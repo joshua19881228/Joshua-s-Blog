@@ -1,0 +1,24 @@
+<!DOCTYPE html> 
+{% extends "base.html" %} 
+{% block title %}My Django Blog{% endblock %} 
+{% block login_bar %} 
+    {% include 'login_bar.html'%} 
+{% endblock %} 
+
+{% block content %} 
+    {% for conversation in conversation_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading" style="font-size:1.5em;">
+                {% if conversation.conversation_title %}
+                    <a href="/{{ conversation.get_url }}">{{ conversation.conversation_title }}</a> 
+                {% else %}
+                    <a href="/{{ conversation.get_url }}">ATTEND THE CONVERSATION</a> 
+                {% endif %}
+                <p>Created at {{ conversation.conversation_pub_date }}</p>
+            </div>
+            <div class="panel-body">
+                <p>A Conversation Created by {{conversation.creator}}</p>
+            </div>
+        </div>
+    {% endfor %} 
+{% endblock %}

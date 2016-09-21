@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>JOSHUA'S BLOG</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ STATIC_URL }}css/sb-admin.css" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="{{ STATIC_URL }}css/plugins/morris.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="{{ STATIC_URL }}tinymce/tinymce.min.js"></script>
+    <link href="{{ STATIC_URL }}markdown-editor/dist/css/bootstrap-markdown-editor.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+    </script>
+    <script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <style type="text/css">
+        blockquote {
+            font-style: italic;
+            font-size: 14px;
+            color: rgb(100, 100, 100);
+        }
+        
+        code {
+            font-size: 14px;
+        }
+        
+        pre {
+            background-color: Transparent;
+            border: 0px;
+            word-wrap: keep-all;
+            overflow: hidden;
+            font-size: 16px
+        }
+        
+        h1 {
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-weight: bold;
+        }
+        
+        h2 {
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-weight: bold;
+        }
+        
+        h2 {
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-weight: bold;
+        }
+        
+        h3 {
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-weight: bold;
+        }
+        
+        h4 {
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-weight: bold;
+        }
+        
+        h5 {
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-weight: bold;
+        }
+        
+        h6 {
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-weight: bold;
+        }
+        
+        p {
+            word-wrap: keep-all;
+            font-family: 'Microsoft YaHei', sans-serif;
+            padding-bottom: 4px;
+            padding-top: 4px;
+            line-height: 1.5;
+        }
+        
+        li {
+            padding-bottom: 4px;
+            line-height: 1.5;
+        }
+        
+        div {
+            word-wrap: keep-all;
+        }
+        
+        .jumbotron {
+            padding: 0.5em 0.6em;
+            height: 50%;
+        }
+        
+        .joshua-title {
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        .joshua-content {
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-size: 16px;
+            color: #383838
+        }
+        
+        video {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="top-nav navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/topic_ALL_list/">JOSHUA's BLOG</a>
+            </div>
+            <div class="navbar-right">{% include 'login_bar.html' %}</div>
+            <!-- Top Menu Items -->
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="/my_profile/" style="padding:15">
+                            <p><img class="img-responsiv center-block" alt="" width="150" src="{{ MEDIA_URL }}profile/portrait.png"></p>
+                            <p align="center" style="line-height:0">ZHIXUAN LI</p>
+                        </a>
+                    </li>
+                    <!---->
+                    {% if topic_name %}<li class="active">{% else %}<li>
+                    {% endif %}
+                    <a href="javascript:;" data-toggle="collapse" data-target="#blog_archive">
+                    <i class="fa fa-th-list fa-fw fa-lg"></i><span style="padding:4px">BLOG ARCHIVE<b class="caret"></b></span></a>
+                        <ul id="blog_archive" class="collapse">
+                            {% ifequal topic_name "ALL" %}
+                                <li style="padding-left:20px"><a href="/topic_ALL_archive/" style="color:#FFFFFF">ALL</a></li>
+                            {% else %}
+                                <li style="padding-left:20px"><a href="/topic_ALL_archive/">ALL</a></li>
+                            {% endifequal %} 
+                            {% for topic in topic_list %} 
+                                {% ifequal topic_name topic.topic_name %}
+                                    <li style="padding-left:20px"><a href="/{{topic.get_url}}/" style="color:#FFFFFF">{{topic.topic_name}}</a></li>
+                                {% else %}
+                                    <li style="padding-left:20px"><a href="/{{topic.get_url}}/">{{topic.topic_name}}</a></li>
+                                {% endifequal %} 
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <!---->
+                    {% if flag %}<li class="active">{% else %}<li>{% endif %} 
+                    {% if user.is_superuser %}
+                        <a href="/add_blog/" target="_blank"><i class="fa fa-pencil fa-fw fa-lg"></i><span style="padding:4px">NEW BLOG</span></a>
+                    {% endif %}
+                    {% block other_sidebar %} 
+                    {% endblock %}
+                    <li>
+                        <a href="#"><i class="fa fa-chevron-up fa-fw fa-lg"></i><span style="padding:4px">TOP</span></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="jumbotron" style="height:50%;">
+                <h1><b>Hello! {{ user.username }}</b></h1>
+                <b style="font-size:1.5em">
+                    Don't aim for success if you want it; just do what you love and believe in, and it will come naturally.
+                </b>
+            </div>
+            <div>
+                <a href="http://joshua881228.webfactional.com/blog_my-jumble-of-computer-vison_135/" target="_blank">
+                    <i class="fa fa-paper-plane fa-md"></i> 
+                    A QUICK LINK TO My Jumble of Computer Vision
+                </a>
+            </div>
+            {% block content %} 
+            {% endblock %} 
+            {% block footer %} 
+            {% endblock %}
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Morris Charts JavaScript -->
+    <script src="{{ STATIC_URL }}js/plugins/morris/raphael.min.js"></script>
+    <script src="{{ STATIC_URL }}js/plugins/morris/morris.min.js"></script>
+    <script src="{{ STATIC_URL }}js/plugins/morris/morris-data.js"></script>
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/ace/1.1.9/ace.js"></script>
+    <script src="//cdn.bootcss.com/marked/0.3.5/marked.min.js"></script>
+    <script src="{{STATIC_URL}}markdown-editor/dist/js/bootstrap-markdown-editor.js"></script>
+
+    <script>
+        jQuery(document).ready(function($) {
+            $('#editor').markdownEditor({
+                preview: true,
+                onPreview: function (content, callback) {
+                    callback( marked(content) );
+                },
+            });
+            $("#submit").click(function(){
+                var content = $('#editor').markdownEditor('content');
+                $('#blog_content').val(content);
+            });
+        });
+    </script>
+</body>
+
+</html>

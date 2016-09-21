@@ -1,0 +1,59 @@
+{% if user_level > 1 %}
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "responsivefilemanager advlist autolink lists link image charmap preview anchor",
+
+                "searchreplace visualblocks code fullscreen",
+                "emoticons"
+            ],
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+            toolbar: "undo redo | bold italic fontsizeselect | emoticons | alignleft aligncenter alignright alignjustify | link image |",
+            autosave_ask_before_unload: false,
+            autosave_ask_before_unload: false,
+                external_filemanager_path:"{{STATIC_URL}}filemanager-mce/",
+                filemanager_title:"Responsive Filemanager" ,
+                external_plugins: { "filemanager" : "{{STATIC_URL}}filemanager-mce/plugin.min.js"},
+                relative_urls : false,
+            menubar: false,
+        });
+    </script>
+{% else %}
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap preview anchor",
+
+                "searchreplace visualblocks code fullscreen",
+                "emoticons"
+            ],
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+            toolbar: "undo redo | bold italic fontsizeselect | emoticons | alignleft aligncenter alignright alignjustify | link image |",
+            menubar: false,
+        });
+    </script> 
+{% endif %}
+
+<form action="/{{add_comment_url}}/" method="post" id="add_comment">
+    {% csrf_token %}
+    <div class="form-group">
+        <p>
+            <div class="input-group">
+                <span class="input-group-addon">NICK NAME</span> {% if user.is_authenticated %}
+                <input class="form-control" type="comment_nickname" name="comment_nickname" value="{{user.username}}" readonly="readonly">                {% else %}
+                <input class="form-control" type="comment_nickname" name="comment_nickname" required> {% endif %}
+            </div>
+        </p>
+        <p>
+            <div class="input-group">
+                <span class="input-group-addon">COMMENT</span>
+                <textarea class="form-control" type="comment_content" name="comment_content" rows="15"></textarea>
+            </div>
+        </p>
+    </div>
+    <div class="form-actions" style="text-align:right">
+        <input class="btn btn-default" type="submit" value="ADD COMMENT">
+    </div>
+</form>

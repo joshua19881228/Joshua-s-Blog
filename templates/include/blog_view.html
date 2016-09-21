@@ -1,0 +1,57 @@
+<!DOCTYPE html> 
+{% extends "base.html" %} 
+{% block title %} 
+    {{post_blog.blog_title}} 
+{% endblock %} 
+
+{% block other_sidebar %}
+    <li><a href="#comments"><i class="fa fa-comment fa-fw fa-lg"></i><span style="padding:4px">ADD COMMENT</span></a></li>
+{% endblock %} 
+
+{% block login_bar %} 
+    {% include 'login_bar_comment.html' %} 
+{% endblock %} 
+
+{% block content %} 
+    {% load djangomarkdown %} 
+    {% load disqus_tags %}
+    <div class="panel-joshua">
+        <div class="panel-heading">
+            <div class="title">
+                <h2>{{ post_blog.blog_title }}</h2>
+            </div>
+            <div>
+                <span style="color:#AAAAAA; padding-right:10px"><b>Pub. Date:</b>{{ post_blog.blog_pub_date }}</span>
+                <span style="color:#AAAAAA; padding-right:10px"><b>Topic:</b>{{ post_blog.blog_topic }}</span>
+                <span style="color:#AAAAAA; padding-right:10px"><b>Tag:</b>{{ post_blog.blog_tag }}</span>
+            </div>
+            {% if user.is_superuser %}
+            <div>
+                <span style="color:#AAAAAA; padding-right:10px"><a href="/{{post_blog.update_url}}/">EDIT</a></span>
+                <span style="color:#AAAAAA; padding-right:10px"><a href="/{{post_blog.delete_url}}/" onclick="return confirm('CONFIRM?')">DELETE</a></span>
+            </div>
+            {% endif %}
+        </div>
+        <div class="panel-body">
+            <div class="joshua-content">{{ post_blog.blog_content|djangomarkdown }}</div>
+        </div>
+    </div>
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key={{post_blog.get_url}} data-title={{ post_blog.blog_title }} data-url="http://joshua881228.webfactional.com//{{post_blog.get_url}}"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"joshua881228"};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0] 
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+    <div id="comments">{% disqus_show_comments %}</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+{% extends "base.html" %} 
+
+{% block title %} Add Blog {% endblock %} 
+
+{% block login_bar %} 
+    {% include 'login_bar.html' %}
+{% endblock %} 
+
+{% block content %}
+<form role="form" action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <p>
+            <div class="input-group">
+                <span class="input-group-addon">TITLE</span>
+                <input class="form-control" type="blog_title" name="blog_title" value="{{a_blog.blog_title}}">
+            </div>
+        </p>
+        <div class="input-group">
+            <span class="input-group-addon">TAGS</span> 
+            {% if a_blog %}
+                <input class="form-control textarea" type="blog_tag" name="blog_tag" value="{{a_blog.blog_tag}}"> 
+            {% else %}
+                <input class="form-control textarea" type="blog_tag" name="blog_tag" value="default"> 
+            {% endif %}
+            <span class="input-group-addon">Level</span>
+            <div class="form-group">
+                <select class="form-control" type="blog_level" name="blog_level">
+                {% for level in level_list %}
+                    {% if selected_level == level %}
+                        <option selected="selected">{{ level }}</option>
+                    {% else %}
+                        <option>{{ level }}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+            <span class="input-group-addon">Topic</span>
+            <div class="form-group">
+                <select class="form-control" type="blog_topic" name="blog_topic">
+                {% for topic in topic_list %}
+                    {% if selected_topic == topic %}
+                        <option selected="selected">{{ topic }}</option>
+                    {% else %}
+                        <option>{{ topic }}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <p><div class="input-group" id="editor">{{a_blog.blog_content}}</div></p>
+        <input id="blog_content" class="form-control textarea" type="hidden" name="blog_content" rows="30"></input>
+        <a href="/filemanager/" target="_blank">upload</a>
+    </div>
+    <div class="form-actions" style="text-align:right">
+        <input id="submit" class="btn btn-default" type="submit" value="SUBMIT">
+    </div>
+</form>
+{% endblock %}

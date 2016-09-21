@@ -1,0 +1,44 @@
+<!DOCTYPE html> 
+{% extends "base.html" %} 
+
+{% block login_bar %} 
+	{% include 'login_bar_comment.html' %} 
+{% endblock %} 
+
+{% block other_sidebar%}
+	<li><a href="#comments"><i class="fa fa-comment fa-fw fa-lg"></i><span style="padding:4px">ADD COMMENT</span></a></li>
+{% endblock %} 
+
+{% block content %}
+	{% load djangomarkdown %} 
+	{% load disqus_tags %}
+	<div class="panel-joshua">
+		<div class="panel-heading">
+			<h2>ABOUT ME</h2>
+		</div>
+		<div class="panel-body">
+			<div class="joshua-content">
+				{{ "Well...I have drawn a mind map for the purpose of self introduction. You can refer to it in the following image and I hope it is helpful. At last thank you for your visiting my website."|djangomarkdown }}
+				<img class="img-responsive center-block" src="{{ MEDIA_URL }}profile/my_profile.jpg" alt="" width="720" />
+			</div>
+		</div>
+		<!-- 多说评论框 start -->
+		<div class="ds-thread" data-thread-key="About Me" data-title="About Me" data-url="http://joshua881228.webfactional.com/my_profile/"></div>
+		<!-- 多说评论框 end -->
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+			var duoshuoQuery = {short_name:"joshua881228"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+		</script>
+		<!-- 多说公共JS代码 end -->
+		<div id="comments">
+			{% disqus_show_comments %}
+		</div>
+{% endblock %}

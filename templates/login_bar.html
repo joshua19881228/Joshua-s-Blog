@@ -1,0 +1,19 @@
+{% if user.is_authenticated %}
+<ul class="nav navbar-nav visible-md visible-lg">
+    <li><a href="https://disqus.com/home/forums/joshualiblog/" target="_blank">{{user}}</a></li>
+    <li><a href="/accounts/logout/">LOGOUT</a></li>
+</ul>
+{% else %}
+<form class="navbar-form" method="post" action="/accounts/login/">
+    {% csrf_token %}
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <input type="text" name="username" class="form-control" placeholder="user name">
+        </div>
+        <div class="input-group input-group-sm">
+            <input type="password" name="password" class="form-control" placeholder="password">
+        </div>
+        <input type="submit" class="btn btn-default btn-sm" value='LOGIN'>
+    </div>
+</form>
+{% endif %}
