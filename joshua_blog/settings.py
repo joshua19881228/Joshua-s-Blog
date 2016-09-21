@@ -53,8 +53,8 @@ DISQUS_API_KEY = 'WJsmS0hUZcMBIpRaJvDBMVoNe6ECB7jqCwL9rtozpBqjsiGHPht9dv8W7NJ4Li
 DISQUS_WEBSITE_SHORTNAME = 'joshualiblog'
 
 MIDDLEWARE_CLASSES = (
-	'joshua_blog.middleware.WebFactionFixes',	
-	###
+    'joshua_blog.middleware.WebFactionFixes',	
+    ###
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
