@@ -30,16 +30,3 @@ urlpatterns = patterns('',
     url(r'^filemanager/'+path_end, filemanager_view),
     url(r'^my_profile/', profile_view),
 )
-
-
-urlpatterns += patterns('',
-                        url(r'^js/(?P<path>.*)$', 'django.views.static.serve',
-                            {'document_root': '/home/joshua/CODE/PYTHON/joshua_blog/static/js/'}
-                            ),
-                        url(r'^css/(?P<path>.*)$', 'django.views.static.serve',
-                            {'document_root': '/home/joshua/CODE/PYTHON/joshua_blog/static/css/'}
-                            ),
-                        url(r'^images/(?P<path>.*)$', 'django.views.static.serve',
-                            {'document_root': '/home/joshua/CODE/PYTHON/joshua_blog/static/images/'}
-                            ),
-                        )
