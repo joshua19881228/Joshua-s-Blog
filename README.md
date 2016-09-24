@@ -84,4 +84,4 @@ Coming here, we have set up the environment. But when we visit `127.0.0.1`, we f
 At last we can visit our website at 127.0.0.1. We can log in as the supervisor using the username of `joshua` and the password of `joshua`. We may meet other issues:
 
 1. Here maybe we will get an error message reading "attempt to write a readonly database". We should change its mode by `chmod 666 db.sqlite3`.
-2. Then another error comes as "unable to open database file". Then we should change the owner of the the whole project `sudo chown www-data joshua_blog`.
+2. Then another error comes as "unable to open database file". Then we should change the owner of the whole project `sudo chown www-data joshua_blog`.
