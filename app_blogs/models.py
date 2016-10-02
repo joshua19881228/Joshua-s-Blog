@@ -20,7 +20,7 @@ class Topic(models.Model):
         return self.topic_name
 
     class Meta:
-	ordering = ('topic_name',)
+        ordering = ('topic_name',)
         verbose_name = 'Topic'
 
 
@@ -29,6 +29,7 @@ class Blog(models.Model):
     blog_title = models.CharField('Title', max_length=1024)
     blog_pub_date = models.DateTimeField('Publish Date', auto_now_add=True)
     blog_content = models.TextField('Content')
+    blog_content_from_url = models.CharField(verbose_name='Content from URL', max_length=1024)
     blog_topic = models.ForeignKey(Topic, verbose_name='Topic')
     blog_tag = models.CharField('Tag', max_length=200, default='default')
     blog_level = models.IntegerField('Level', default=0)
@@ -59,7 +60,7 @@ class Conversation(models.Model):
 
     def get_url(self):
         return 'conversation_%d' % self.id
-		
+        
     def __unicode__(self):
         return self.creator
 
@@ -73,10 +74,10 @@ class Comment(models.Model):
     comment_reply_target = models.CharField('Target', max_length=32, blank=True, null=True)
     comment_pub_date = models.DateTimeField('Comment Date', auto_now_add=True)
     comment_content = models.TextField('Content')
-	
+    
     def delete_url(self):
-	return 'delete_comment_%d' % self.id
-	
+        return 'delete_comment_%d' % self.id
+    
     def __unicode__(self):
         return self.comment_nickname
 
@@ -102,7 +103,7 @@ class TopicForm(ModelForm):
 class BlogForm(ModelForm):
     class Meta:
         model = Blog
-        fields = ['blog_title', 'blog_tag', 'blog_content']
+        fields = ['blog_title', 'blog_tag', 'blog_content', 'blog_content_from_url']
 
 
 class CommentForm(ModelForm):
