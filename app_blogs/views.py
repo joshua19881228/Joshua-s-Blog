@@ -7,7 +7,19 @@ from models import *
 from filemanager import FileManager
 from joshua_blog.settings import MEDIA_ROOT
 import math
+
+import urllib2
 # Create your views here.
+
+def read_md_from_url(input_url):
+    try:
+        if "http://joshua881228.webfactional.com" in input_url:
+            return ''
+        else:
+            response = urllib2.urlopen(input_url, timeout=5)
+            return response.read()
+    except:
+        return ''
 
 def profile_view(request):
     if request.user.is_anonymous():
@@ -50,6 +62,10 @@ def blog_archive_view(request, topic_name='ALL', page_idx=1):
     total_page_num = int(math.ceil(total_blog_num/float(blog_num_per_page))) + 1
     end_page_idx = min(total_page_num, start_page_idx+page_num_per_slide)
     blog_list = blogs[(page_idx-1)*blog_num_per_page: min(page_idx*blog_num_per_page, total_blog_num)]
+
+    for a_blog in blog_list:
+        a_blog.blog_content = read_md_from_url(a_blog.blog_content_from_url)
+
     page_list = [x for x in range(start_page_idx, end_page_idx)]
     if page_idx < total_page_num:
         next_page_idx = page_idx+1
@@ -84,6 +100,8 @@ def blog_list_view(request, topic_name='ALL', page_idx=1):
     total_page_num = int(math.ceil(total_blog_num/float(blog_num_per_page))) + 1
     end_page_idx = min(total_page_num, start_page_idx+page_num_per_slide)
     blog_list = blogs[(page_idx-1)*blog_num_per_page: min(page_idx*blog_num_per_page, total_blog_num)]
+    for a_blog in blog_list:
+        a_blog.blog_content = read_md_from_url(a_blog.blog_content_from_url)
     page_list = [x for x in range(start_page_idx, end_page_idx)]
     if page_idx < total_page_num:
         next_page_idx = page_idx+1
@@ -100,6 +118,7 @@ def blog_view(request, input_url):
     topic_list = Topic.objects.all()
     blog_id = int(input_url[input_url.rfind('_')+1:])
     post_blog = Blog.objects.get(id=blog_id)
+    post_blog.blog_content = read_md_from_url(post_blog.blog_content_from_url)
     add_comment_url = 'add_comment_to_blog_%s' % blog_id
     return render_to_response('blog_view.html', locals(), context_instance=RequestContext(request))
 
