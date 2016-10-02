@@ -49,6 +49,16 @@
                 </select>
             </div>
         </div>
+        <p>
+            <div class="input-group">
+                <span class="input-group-addon">BLOG FROM URL</span>
+                {% if a_blog %}
+                    <input class="form-control" type="blog_content_from_url" name="blog_content_from_url" value="{{a_blog.blog_content_from_url}}">
+                {% else %}
+                    <input class="form-control" type="blog_content_from_url" name="blog_content_from_url" value="http://joshua881228.webfactional.com">
+                {% endif %}
+            </div>
+        </p>
         <p><div class="input-group" id="editor">{{a_blog.blog_content}}</div></p>
         <input id="blog_content" class="form-control textarea" type="hidden" name="blog_content" rows="30"></input>
         <a href="/filemanager/" target="_blank">upload</a>
