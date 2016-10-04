@@ -158,6 +158,7 @@ def blog_add_view(request):
         if form.is_valid():
             a_blog = Blog(blog_title=request.POST.get('blog_title'),
                           blog_content=request.POST.get('blog_content'),
+                          blog_content_from_url=request.POST.get('blog_content_from_url'),
                           blog_tag=request.POST.get('blog_tag'),
                           blog_level=blog_level_dict[request.POST.get('blog_level')],
                           blog_topic=Topic.objects.get(topic_name=request.POST.get('blog_topic'))
@@ -182,6 +183,7 @@ def blog_update_view(request, input_id):
         if form.is_valid():
             a_blog.blog_title = request.POST.get('blog_title')
             a_blog.blog_content = request.POST.get('blog_content')
+            blog_content_from_url=request.POST.get('blog_content_from_url'),
             a_blog.blog_tag = request.POST.get('blog_tag')
             a_blog.blog_level = blog_level_dict[request.POST.get('blog_level')]
             a_blog.blog_topic = Topic.objects.get(topic_name=request.POST.get('blog_topic'))
