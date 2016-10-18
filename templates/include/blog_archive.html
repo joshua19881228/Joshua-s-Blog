@@ -5,24 +5,28 @@
     {% include 'login_bar.html' %} 
 {% endblock %}
 
-{% block content %} 
+{% block content %}    
     {% for blog in blog_list %}
-        <div>
-            <h1><a href="/{{ blog.get_url }}/">{{ blog.blog_title }}</a></h1>
+    <div class="panel-joshua">
+        <div class="panel-heading">
+            <div>
+                <h1><a href="/{{ blog.get_url }}/">{{ blog.blog_title }}</a></h1>
+            </div>
+            <div>
+                <span style="color:#AAAAAA; padding-right:10px"><b>Pub. Date:</b>{{ blog.blog_pub_date }}</span>
+                <span style="color:#AAAAAA; padding-right:10px"><b>Topic:</b>{{ blog.blog_topic }}</span>
+                <span style="color:#AAAAAA; padding-right:10px"><b>Tag:</b>{{ blog.blog_tag }}</span>
+            </div>
+            <div>
+                {% if user.is_superuser %}
+                <span style="color:#AAAAAA; padding-right:10px"><a href="/{{blog.update_url}}/">EDIT</a></span>
+                <span style="color:#AAAAAA; padding-right:10px"><a href="/{{blog.delete_url}}/" onclick="return confirm('CONFIRM?')">DELETE</a></span>    
+                {% endif %}
+            </div>
         </div>
-        <div>
-            <span style="color:#AAAAAA; padding-right:10px"><b>Pub. Date:</b>{{ blog.blog_pub_date }}</span>
-            <span style="color:#AAAAAA; padding-right:10px"><b>Topic:</b>{{ blog.blog_topic }}</span>
-            <span style="color:#AAAAAA; padding-right:10px"><b>Tag:</b>{{ blog.blog_tag }}</span>
-        </div>
-        <div>
-            {% if user.is_superuser %}
-            <span style="color:#AAAAAA; padding-right:10px"><a href="/{{blog.update_url}}/">EDIT</a></span>
-            <span style="color:#AAAAAA; padding-right:10px"><a href="/{{blog.delete_url}}/" onclick="return confirm('CONFIRM?')">DELETE</a></span>    
-            {% endif %}
-        </div>
-        <hr> 
+    </div>
     {% endfor %}
+    
     <div class="page-number" style="text-align:right">
         <a href="/{{archive_type}}/{{prev_page_idx}}" class="btn btn-default">PREV</a> 
         {% if not start_page_idx == 1 %}
