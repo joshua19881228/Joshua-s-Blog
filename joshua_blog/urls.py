@@ -29,4 +29,5 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', account_logout_view),
     url(r'^filemanager/'+path_end, filemanager_view),
     url(r'^my_profile/', profile_view),
+    url(r'^favicon\.ico$', RedirectView.as_view(url=settings.MEDIA_URL+r'/media/favicon.ico')),
 )
