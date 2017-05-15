@@ -9,4 +9,8 @@ register = template.Library()
 @register.filter(name='djangomarkdown', is_safe=True)
 @stringfilter
 def djangomarkdown(value):
-    return mark_safe(markdown2.markdown(force_unicode(value), extras=["code-friendly"] ))
+    return mark_safe(markdown2.markdown(force_unicode(value), 
+        extras=["code-friendly", 
+                "fenced-code-blocks",
+                "tables",
+                ] ))
